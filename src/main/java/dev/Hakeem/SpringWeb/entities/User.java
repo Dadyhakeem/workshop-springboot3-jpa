@@ -3,6 +3,9 @@ package dev.Hakeem.SpringWeb.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +23,7 @@ public class User implements Serializable{
     private String email;
     private String phone;
     private String password;
+    @JsonIgnore
      @OneToMany(mappedBy = "cliente")
     private List<Order> orders = new ArrayList<>();
 
