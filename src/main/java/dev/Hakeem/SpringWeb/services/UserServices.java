@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import dev.Hakeem.SpringWeb.entities.User;
 import dev.Hakeem.SpringWeb.repository.UserRepository;
@@ -24,4 +25,19 @@ public class UserServices {
         Optional<User> obj = userRepository.findById(id);
         return obj.get();
     }
+     
+    public User insert(User obj){
+      return  userRepository.save(obj);
+    }
+
+
+
+
+
+
+
+
+
+
+
 }
