@@ -2,6 +2,8 @@ package dev.Hakeem.SpringWeb.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -12,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 @Entity
 @Table(name = "tb_Order")
@@ -27,8 +30,11 @@ public class Order implements Serializable {
     @ManyToOne
     @JoinColumn(name = "client_id")
     private User cliente;
-    
-    
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> Items = new HashSet<>();
+    public Order (){
+        
+    }
     public Order(Long id, Instant moment, User cliente,OrderStatus orderStatus) {
         this.id = id;
         this.moment = moment;
@@ -62,6 +68,10 @@ public class Order implements Serializable {
         if (orderStatus != null) {
            this.orderStatus = orderStatus.getcode();
         }
+    }
+
+    public Set<OrderItem>getItems(){
+        return Items;
     }
 
     @Override

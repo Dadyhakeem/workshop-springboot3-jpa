@@ -2,10 +2,11 @@ package dev.Hakeem.SpringWeb.entities;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import dev.Hakeem.SpringWeb.entities.pk.OrderItemsPk;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 @Entity
 @Table(name = "tb_orderItem")
@@ -13,7 +14,7 @@ public class OrderItem implements Serializable{
     private static final Long serialVersionUID = 1L;
     
      @EmbeddedId
-    private OrderItemsPk id;
+    private OrderItemsPk id = new OrderItemsPk();
 
     private Integer quantity;
     private Double price;
@@ -28,7 +29,7 @@ public class OrderItem implements Serializable{
         this.quantity = quantity;
         this.price = price;
     }
-
+    @JsonIgnore
     public Order getOrder(){
         return id.getOrder();
     }
