@@ -2,14 +2,13 @@ package dev.Hakeem.SpringWeb.services;
 
 import java.util.List;
 import java.util.Optional;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-
 import dev.Hakeem.SpringWeb.entities.User;
 import dev.Hakeem.SpringWeb.repository.UserRepository;
+import dev.Hakeem.SpringWeb.services.exceptions.ResourceNotFoundException;
+
+
 @Service
 public class UserServices {
     @Autowired
@@ -23,7 +22,7 @@ public class UserServices {
     public User findById(Long id)
     {
         Optional<User> obj = userRepository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(()-> new ResourceNotFoundException(id));
     }
      
     public User insert(User obj){
