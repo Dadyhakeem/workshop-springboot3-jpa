@@ -3,9 +3,12 @@ package dev.Hakeem.SpringWeb.services;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import dev.Hakeem.SpringWeb.entities.User;
 import dev.Hakeem.SpringWeb.repository.UserRepository;
+import dev.Hakeem.SpringWeb.services.exceptions.DatabaseException;
 import dev.Hakeem.SpringWeb.services.exceptions.ResourceNotFoundException;
 
 
@@ -30,7 +33,13 @@ public class UserServices {
     }
 
     public void delete(Long id){
+        try{
         userRepository.deleteById(id);
+        }catch (EmptyResultDataAccessException e){
+            throw new ResourceNotFoundException(id);
+        }catch (DataIntegrityViolationException e){
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     public User update(Long id,User obj){
